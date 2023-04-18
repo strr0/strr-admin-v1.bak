@@ -13,7 +13,7 @@
         select rid from sys_rel_user_role where uid = #{uid}
     </select>
 
-    <delete id="deleteRelByUid">
+    <delete id="removeRelByUid">
         delete from sys_rel_user_role where uid = #{uid}
     </delete>
 

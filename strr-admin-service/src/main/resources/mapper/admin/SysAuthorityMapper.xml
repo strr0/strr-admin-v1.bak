@@ -8,7 +8,7 @@
         left join sys_authority t3 on t.aid = t3.id
     </select>
 
-    <delete id="deleteRelByAid">
+    <delete id="removeRelByAid">
         delete from sys_rel_role_authority where aid = #{aid}
     </delete>
 </mapper>

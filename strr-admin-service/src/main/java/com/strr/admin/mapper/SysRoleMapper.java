@@ -44,12 +44,12 @@ public interface SysRoleMapper extends SCrudMapper<SysRole, Integer> {
      * @param rid
      * @return
      */
-    int deleteRARelByRid(Integer rid);
+    int removeRARelByRid(Integer rid);
 
     /**
      * 删除用户角色关联
      * @param rid
      * @return
      */
-    int deleteURRelByRid(Integer rid);
+    int removeURRelByRid(Integer rid);
 }

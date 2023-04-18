@@ -51,6 +51,6 @@ public class SysAuthorityServiceImpl extends SCrudServiceImpl<SysAuthority, Inte
     @Override
     public void removeWithRel(Integer id) {
         sysAuthorityMapper.remove(id);
-        sysAuthorityMapper.deleteRelByAid(id);
+        sysAuthorityMapper.removeRelByAid(id);
     }
 }

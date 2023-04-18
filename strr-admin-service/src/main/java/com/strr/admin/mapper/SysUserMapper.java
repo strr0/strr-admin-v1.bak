@@ -38,7 +38,7 @@ public interface SysUserMapper extends SCrudMapper<SysUser, Integer> {
      * @param uid
      * @return
      */
-    int deleteRelByUid(Integer uid);
+    int removeRelByUid(Integer uid);
 
     /**
      * 获取用户

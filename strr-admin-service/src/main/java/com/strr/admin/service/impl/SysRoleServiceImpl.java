@@ -67,7 +67,7 @@ public class SysRoleServiceImpl extends SCrudServiceImpl<SysRole, Integer> imple
     @Override
     public void removeWithRel(Integer id) {
         sysRoleMapper.remove(id);
-        sysRoleMapper.deleteRARelByRid(id);
-        sysRoleMapper.deleteURRelByRid(id);
+        sysRoleMapper.removeRARelByRid(id);
+        sysRoleMapper.removeURRelByRid(id);
     }
 }

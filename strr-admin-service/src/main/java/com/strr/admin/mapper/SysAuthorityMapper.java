@@ -20,5 +20,5 @@ public interface SysAuthorityMapper extends SCrudMapper<SysAuthority, Integer> {
      * @param aid
      * @return
      */
-    int deleteRelByAid(Integer aid);
+    int removeRelByAid(Integer aid);
 }

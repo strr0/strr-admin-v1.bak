@@ -19,11 +19,11 @@
         select aid from sys_rel_role_authority where rid = #{rid}
     </select>
 
-    <delete id="deleteRARelByRid">
+    <delete id="removeRARelByRid">
         delete from sys_rel_role_authority where rid = #{rid}
     </delete>
 
-    <delete id="deleteURRelByRid">
+    <delete id="removeURRelByRid">
         delete from sys_rel_user_role where rid = #{rid}
     </delete>
 </mapper>

@@ -68,6 +68,6 @@ public class SysUserServiceImpl extends SCrudServiceImpl<SysUser, Integer> imple
     @Override
     public void removeWithRel(Integer id) {
         sysUserMapper.remove(id);
-        sysUserMapper.deleteRelByUid(id);
+        sysUserMapper.removeRelByUid(id);
     }
 }
