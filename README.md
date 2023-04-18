@@ -14,7 +14,8 @@ git clone https://github.com/strr0/strr-admin
 ```
 mvn deploy
 ```
-3. 新建项目引入依赖
+3. 运行strr-admin-service模块的schema.sql文件
+4. 新建项目引入依赖
 ```
 pom.xml
 ...
@@ -97,4 +98,16 @@ mybatis:
   configuration:
     # 下划线驼峰映射
     map-underscore-to-camel-case: true
+```
+```
+Application.java
+...
+@SpringBootApplication
+@EnableAuthorizationServer
+@EnableResourceServer
+public class Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
 ```
