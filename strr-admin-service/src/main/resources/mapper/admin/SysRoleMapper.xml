@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.strr.admin.mapper.SysRoleMapper">
-    <select id="list" resultType="com.strr.admin.model.SysRole">
-        select * from sys_role
+    <select id="listByUserId" resultType="com.strr.admin.model.SysRole">
+        select t1.id, t1.name, t1.remark, t1.seq, t1.creator, t1.create_time, t1.updator, t1.update_time, t1.status
+        from sys_role t1 left join sys_rel_user_role t2 on t1.id = t2.rid
+        where t2.uid = #{userId}
     </select>
+
+    <insert id="saveRel">
+        insert into sys_rel_role_authority values(#{rid}, #{aid})
+    </insert>
+
+    <delete id="removeRel">
+        delete sys_rel_role_authority where rid = #{rid} and aid = #{aid}
+    </delete>
+
+    <select id="listRelByRid" resultType="java.lang.Integer">
+        select aid from sys_rel_role_authority where rid = #{rid}
+    </select>
+
+    <delete id="deleteRARelByRid">
+        delete from sys_rel_role_authority where rid = #{rid}
+    </delete>
+
+    <delete id="deleteURRelByRid">
+        delete from sys_rel_user_role where rid = #{rid}
+    </delete>
 </mapper>

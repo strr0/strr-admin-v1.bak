@@ -24,8 +24,33 @@ public class SysAuthorityServiceImpl extends SCrudServiceImpl<SysAuthority, Inte
         return sysAuthorityMapper;
     }
 
+    /**
+     * 权限列表
+     * @param param
+     * @return
+     */
     @Override
-    public List<SysAuthority> list() {
-        return sysAuthorityMapper.list();
+    public List<SysAuthority> listByParam(SysAuthority param) {
+        return sysAuthorityMapper.listByParam(param);
+    }
+
+    /**
+     * 获取用户权限
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<SysAuthority> listByUserId(Integer userId) {
+        return sysAuthorityMapper.listByUserId(userId);
+    }
+
+    /**
+     * 删除权限
+     * @param id
+     */
+    @Override
+    public void removeWithRel(Integer id) {
+        sysAuthorityMapper.remove(id);
+        sysAuthorityMapper.deleteRelByAid(id);
     }
 }

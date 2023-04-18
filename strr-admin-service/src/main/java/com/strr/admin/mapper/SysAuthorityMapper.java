@@ -8,5 +8,17 @@ import java.util.List;
 
 @Mapper
 public interface SysAuthorityMapper extends SCrudMapper<SysAuthority, Integer> {
-    List<SysAuthority> list();
+    /**
+     * 获取用户权限
+     * @param userId
+     * @return
+     */
+    List<SysAuthority> listByUserId(Integer userId);
+
+    /**
+     * 删除角色权限关联
+     * @param aid
+     * @return
+     */
+    int deleteRelByAid(Integer aid);
 }
