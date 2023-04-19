@@ -12,6 +12,7 @@
         <module>strr-admin-service</module>
         <module>strr-admin-common</module>
         <module>strr-admin-demo</module>
+        <module>strr-admin-generator</module>
     </modules>
 
     <properties>
@@ -25,7 +26,9 @@
         <mybatis-boot.version>2.2.0</mybatis-boot.version>
         <mybatis-spring.version>2.0.6</mybatis-spring.version>
         <mybatis.version>3.5.7</mybatis.version>
+        <mybatis-generator.version>1.4.0</mybatis-generator.version>
         <mysql.version>8.0.22</mysql.version>
+        <yaml.version>1.30</yaml.version>
     </properties>
 
     <dependencyManagement>
