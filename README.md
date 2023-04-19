@@ -46,17 +46,13 @@ pom.xml
     </dependencyManagement>
 
     <dependencies>
+        ...
         <dependency>
             <groupId>com.strr</groupId>
             <artifactId>strr-admin-service</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.version}</version>
-        </dependency>
+        ...
     </dependencies>
 
     <build>
