@@ -3,6 +3,7 @@
 ### 项目介绍
 - strr-admin-common 通用模块：基础CRUD封装及工具类
 - strr-admin-service 权限管理模块：基础框架
+- strr-admin-generator 代码生成器
 - strr-admin-demo 示例
 
 ### 使用
@@ -28,7 +29,6 @@ pom.xml
         <spring-boot.version>2.3.7.RELEASE</spring-boot.version>
         <spring.version>5.2.12.RELEASE</spring.version>
         <mybatis-boot.version>2.2.0</mybatis-boot.version>
-        <mybatis-spring.version>2.0.6</mybatis-spring.version>
         <mybatis.version>3.5.7</mybatis.version>
         <mysql.version>8.0.22</mysql.version>
     </properties>
