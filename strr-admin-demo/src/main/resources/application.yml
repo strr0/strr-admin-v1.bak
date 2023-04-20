@@ -1,8 +1,8 @@
-server:
-  port: 8081
 spring:
   application:
     name: admin
+  profiles:
+    active: dev
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/strr_admin?serverTimezone=UTC
@@ -13,3 +13,9 @@ mybatis:
   configuration:
     # 下划线驼峰映射
     map-underscore-to-camel-case: true
+# oauth2配置
+oauth2:
+  client: STRR_CLIENT
+  secret: STRR_SECRET
+  # 多个scope用 ',' 隔开
+  scopes: web
