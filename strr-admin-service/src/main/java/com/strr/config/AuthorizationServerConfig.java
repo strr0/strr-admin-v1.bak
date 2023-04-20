@@ -21,13 +21,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private final CustomUserDetailsService customUserDetailsService;
     private final PasswordEncoder passwordEncoder;
 
-    @Value("${oauth2.client}")
+    @Value("${oauth2.client:STRR_CLIENT}")
     private String client;
 
-    @Value("${oauth2.secret}")
+    @Value("${oauth2.secret:STRR_SECRET}")
     private String secret;
 
-    @Value("${oauth2.scopes}")
+    @Value("${oauth2.scopes:web}")
     private String[] scopes;
 
     @Autowired
