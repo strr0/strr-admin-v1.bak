@@ -48,6 +48,9 @@ public class VelocityUtil {
 
     public static void loadContext(IntrospectedTable introspectedTable) {
         if (flag) {
+            if (context.containsKey("entityName")) {
+                run();
+            }
             context.put("entityName", introspectedTable.getFullyQualifiedTable().getDomainObjectName());
             context.put("tableComment", introspectedTable.getRemarks());
             context.put("columnInfoList", introspectedTable.getAllColumns());
