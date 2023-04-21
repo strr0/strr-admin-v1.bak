@@ -11,7 +11,6 @@ import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.internal.util.messages.Messages;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 public class JavaBaseRecordGenerator extends AbstractJavaGenerator {
