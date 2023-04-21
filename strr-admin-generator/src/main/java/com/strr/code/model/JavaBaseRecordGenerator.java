@@ -67,7 +67,6 @@ public class JavaBaseRecordGenerator extends AbstractJavaGenerator {
                 if (plugins.modelSetterMethodGenerated(method, topLevelClass, introspectedColumn, this.introspectedTable, Plugin.ModelClassType.BASE_RECORD)) {
                     topLevelClass.addMethod(method);
                 }
-
             }
         }
     }
