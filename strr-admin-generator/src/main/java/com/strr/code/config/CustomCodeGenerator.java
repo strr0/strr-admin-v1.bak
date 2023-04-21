@@ -1,5 +1,7 @@
 package com.strr.code.config;
 
+import com.strr.code.util.VelocityUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.*;
 import org.mybatis.generator.internal.DefaultShellCallback;
@@ -40,6 +42,9 @@ public class CustomCodeGenerator {
         context.setSqlMapGeneratorConfiguration(loadSqlMapGeneratorConfiguration(configuration));
         context.setClientProject(configuration.getClientProject());
         context.setCommentGeneratorConfiguration(loadCommentGeneratorConfiguration());
+        // vue
+        loadVueConfiguration(configuration);
+        // table
         for (String table : configuration.getTables()) {
             context.addTable(table);
         }
@@ -78,6 +83,14 @@ public class CustomCodeGenerator {
         return commentGeneratorConfiguration;
     }
 
+    private void loadVueConfiguration(CustomConfiguration configuration) {
+        if (StringUtils.isNotBlank(configuration.getVueProject())) {
+            VelocityUtil.setProject(configuration.getVueProject());
+            VelocityUtil.setPackage(configuration.getTargetPackage());
+            VelocityUtil.ready();
+        }
+    }
+
     // 生成代码
     public void generate() {
         try {
@@ -94,5 +107,7 @@ public class CustomCodeGenerator {
         CustomCodeGenerator generator = new CustomCodeGenerator();
         generator.initialize();
         generator.generate();
+        // vue
+        VelocityUtil.run();
     }
 }

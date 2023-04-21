@@ -9,6 +9,7 @@ public class CustomConfiguration {
     private String targetPackage;
     private String targetProject;
     private String clientProject;
+    private String vueProject;
 
     private String[] tables;
 
@@ -66,6 +67,14 @@ public class CustomConfiguration {
 
     public void setClientProject(String clientProject) {
         this.clientProject = clientProject;
+    }
+
+    public String getVueProject() {
+        return vueProject;
+    }
+
+    public void setVueProject(String vueProject) {
+        this.vueProject = vueProject;
     }
 
     public String[] getTables() {

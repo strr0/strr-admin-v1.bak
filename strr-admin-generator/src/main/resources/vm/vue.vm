@@ -1,0 +1,248 @@
+#set ($entityLowerName = $entityName.substring(0, 1).toLowerCase() + $entityName.substring(1))
+<template>
+    <div>
+        <div style="display: flex; justify-content: space-between; margin-top: 10px">
+            <div>
+                <el-input prefix-icon="el-icon-search" style="width: 350px; margin-right: 10px" />
+                <el-button type="primary" icon="el-icon-search">搜索</el-button>
+            </div>
+            <div>
+                <el-button v-for="item in btnList" :key="item.id" :type="item.type" :icon="item.icon" @click="handler(item.func)">
+                    {{ item.name }}
+                </el-button>
+            </div>
+        </div>
+
+        <div style="margin-top: 10px">
+            <el-table :data="${entityLowerName}List" stripe border v-loading="loading" style="width: 100%"
+              highlight-current-row @current-change="selectCurrentRow">
+                <el-table-column type="selection" />
+#foreach($columnInfo in $columnInfoList)
+#if ($foreach.count != 1)
+                <el-table-column prop="${columnInfo.javaProperty}" label="${columnInfo.remarks}" />
+#end
+#end
+            </el-table>
+            <el-pagination background
+              @current-change="pageChange"
+              layout="prev, pager, next, total"
+              :total="total" />
+        </div>
+
+        <div>
+            <el-dialog :title="title" :visible.sync="showModalVisible" width="50%">
+                <el-form :model="${entityLowerName}" label-position="right" label-width="80px">
+#foreach($columnInfo in $columnInfoList)
+#if ($foreach.count != 1)
+#if ($foreach.count % 2 == 0)
+                    <el-row>
+                        <el-col :span="12">
+                            <el-form-item prop="${columnInfo.javaProperty}" label="${columnInfo.remarks}">
+                                <el-input type="text" v-model="${entityLowerName}.${columnInfo.javaProperty}" style="width: 80%" disabled />
+                            </el-form-item>
+                        </el-col>
+#else
+                        <el-col :span="12">
+                            <el-form-item prop="${columnInfo.javaProperty}" label="${columnInfo.remarks}">
+                                <el-input type="text" v-model="${entityLowerName}.${columnInfo.javaProperty}" style="width: 80%" disabled />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+#end
+#end
+#end
+#if ($columnInfoList.size() > 0 && $columnInfoList.size() % 2 == 0)
+                    </el-row>
+#end
+                </el-form>
+            </el-dialog>
+        </div>
+
+        <div>
+            <el-dialog :title="title" :visible.sync="editModalVisible" width="50%">
+                <el-form :model="${entityLowerName}" ref="${entityLowerName}" :rules="rules" label-position="right" label-width="80px">
+#foreach($columnInfo in $columnInfoList)
+#if ($foreach.count != 1)
+#if ($foreach.count % 2 == 0)
+                    <el-row>
+                        <el-col :span="12">
+                            <el-form-item prop="${columnInfo.javaProperty}" label="${columnInfo.remarks}">
+                                <el-input type="text" v-model="${entityLowerName}.${columnInfo.javaProperty}" placeholder="请输入${columnInfo.remarks}"
+                                  prefix-icon="el-icon-edit" style="width: 80%" />
+                            </el-form-item>
+                        </el-col>
+#else
+                        <el-col :span="12">
+                            <el-form-item prop="${columnInfo.javaProperty}" label="${columnInfo.remarks}">
+                                <el-input type="text" v-model="${entityLowerName}.${columnInfo.javaProperty}" placeholder="请输入${columnInfo.remarks}"
+                                  prefix-icon="el-icon-edit" style="width: 80%" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+#end
+#end
+#end
+#if ($columnInfoList.size() > 0 && $columnInfoList.size() % 2 == 0)
+                    </el-row>
+#end
+                </el-form>
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="editModalVisible = false">取消</el-button>
+                    <el-button type="primary" @click="save">确定</el-button>
+                </span>
+            </el-dialog>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        name: '${entityName}',
+        data() {
+            return {
+                loading: false,
+                page: 0,
+                size: 10,
+                total: 0,
+                btnList: [],
+                ${entityLowerName}List: [],
+                title: '',
+                showModalVisible: false,
+                editModalVisible: false,
+                ${entityLowerName}: {
+#foreach($columnInfo in $columnInfoList)
+                    ${columnInfo.javaProperty}: '',
+#end
+                },
+                rules: {
+#foreach($columnInfo in $columnInfoList)
+                    ${columnInfo.javaProperty}: [{required: true, message: '请输入${columnInfo.remarks}', trigger: 'blur'}],
+#end
+                }
+            }
+        },
+        mounted() {
+            this.initBtn()
+            this.init${entityName}()
+        },
+#set ($lastPointIndex = $packageName.lastIndexOf(".") + 1)
+#set ($url = '/api/' + ${packageName.substring($lastPointIndex)} + '/' + ${entityLowerName})
+        methods: {
+            handler(func) {
+                this[func]()
+            },
+            selectCurrentRow(val) {
+                this.currentRow = val
+            },
+            pageChange(page) {
+                this.page = page - 1
+                this.init${entityName}();
+            },
+            initBtn() {
+                let menuId = this.$store.state.menuId
+                this.getRequest('/system/authority/getBtns?menuId=' + menuId).then(resp => {
+                    if (resp && resp.success) {
+                        this.btnList = resp.data
+                    }
+                })
+            },
+            init${entityName}() {
+                this.loading = true
+                let url = '${url}/page?page=' + this.page + '&size=' + this.size
+                this.getRequest(url).then(resp => {
+                    this.loading = false
+                    if(resp && resp.success) {
+                        this.${entityLowerName}List = resp.data.content
+                        this.total = resp.data.total
+                    }
+                })
+            },
+            empty() {
+                this.${entityLowerName} = {
+#foreach($columnInfo in $columnInfoList)
+                    ${columnInfo.javaProperty}: '',
+#end
+                }
+            },
+            save() {
+                this.$refs.${entityLowerName}.validate(valid => {
+                    if(valid) {
+                        let form = this.${entityLowerName}
+                        this.postRequest('${url}/save', form).then(resp => {
+                            if(resp && resp.success) {
+                            this.$message({
+                                message: '保存成功',
+                                type: 'success'
+                            })
+                            this.editModalVisible = false
+                            this.init${entityName}()
+                        }
+                    })
+                    }
+                })
+            },
+            //查看
+            show() {
+                if (this.currentRow == null) {
+                    this.$message({
+                        message: '请选择一项',
+                        type: 'warning'
+                    })
+                    return
+                }
+                this.title = '查看${tableComment}信息'
+                this.${entityLowerName} = this.currentRow
+                this.showModalVisible = true
+            },
+            //添加
+            add() {
+                this.title = '添加${tableComment}信息'
+                this.empty()
+                this.editModalVisible = true
+            },
+            //修改
+            edit() {
+                if (this.currentRow == null) {
+                    this.$message({
+                        message: '请选择一项',
+                        type: 'warning'
+                    })
+                    return
+                }
+                this.title = '修改${tableComment}信息'
+                this.${entityLowerName} = this.currentRow
+                this.editModalVisible = true
+            },
+            //删除
+            del() {
+                if (this.currentRow == null) {
+                    this.$message({
+                        message: '请选择一项',
+                        type: 'warning'
+                    })
+                    return
+                }
+                this.$confirm('此操作将永久删除此项, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.deleteRequest('${url}/delete?id=' + this.currentRow.id).then((resp) => {
+                        if (resp) {
+                            this.$message({
+                                message: '删除成功',
+                                type: 'success'
+                            })
+                            this.init${entityName}()
+                        }
+                    })
+                }).catch(() => {
+                        this.$message({
+                        message: '已取消',
+                        type: 'info'
+                    })
+                })
+            }
+        }
+    }
+</script>

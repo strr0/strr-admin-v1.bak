@@ -5,12 +5,10 @@ import com.strr.code.mapper.JavaBaseMapperGenerator;
 import com.strr.code.mapper.XmlBaseMapperGenerator;
 import com.strr.code.model.JavaBaseRecordGenerator;
 import com.strr.code.service.JavaBaseServiceGenerator;
+import com.strr.code.util.VelocityUtil;
 import org.mybatis.generator.api.ProgressCallback;
-import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
-import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl;
-import org.mybatis.generator.codegen.mybatis3.javamapper.JavaMapperGenerator;
 import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.internal.rules.ConditionalModelRules;
 import org.mybatis.generator.internal.rules.FlatModelRules;
@@ -86,6 +84,8 @@ public class CustomIntrospectedTable extends IntrospectedTableMyBatis3Impl {
             this.rules = new ConditionalModelRules(this);
         }
         this.context.getPlugins().initialized(this);
+        // vue
+        this.calculateVueAttributes();
     }
 
     // 设置model属性
@@ -176,6 +176,12 @@ public class CustomIntrospectedTable extends IntrospectedTableMyBatis3Impl {
         sb.append(this.fullyQualifiedTable.getDomainObjectName());
         sb.append("Controller");
         this.setMyBatis3JavaControllerType(sb.toString());
+    }
+
+    // vue
+    protected void calculateVueAttributes() {
+        VelocityUtil.setPath(moduleName + '/' + basicName + "/index.vue");
+        VelocityUtil.loadContext(this);
     }
 
     // 生成
