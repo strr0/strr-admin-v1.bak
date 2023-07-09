@@ -132,7 +132,7 @@ public class CrudMappedStatement {
         private void preBuild() {
             Class<?> mapperInterface = this.crudMappedStatement.mapperInterface;
             // 是否实现CrudMapper接口
-            if (!SCrudMapper.class.isAssignableFrom(mapperInterface)) {
+            if (SCrudMapper.class.equals(mapperInterface) || !SCrudMapper.class.isAssignableFrom(mapperInterface)) {
                 return;
             }
             // 获取CrudMapper的泛型参数
