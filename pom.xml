@@ -9,10 +9,9 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>strr-admin-service</module>
-        <module>strr-admin-common</module>
-        <module>strr-admin-demo</module>
-        <module>strr-admin-generator</module>
+        <module>strr-common</module>
+        <module>strr-module</module>
+        <module>strr-boot</module>
     </modules>
 
     <properties>
@@ -40,11 +39,4 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <distributionManagement>
-        <repository>
-            <id>strr-repo</id>
-            <url>file:${basedir}/repo</url>
-        </repository>
-    </distributionManagement>
 </project>
