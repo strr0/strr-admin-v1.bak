@@ -2,6 +2,16 @@
 
 ### 项目介绍
 
+项目依赖
+
+| 依赖                     | 版本             |
+|------------------------|----------------|
+| Spring Boot            | 2.3.7.RELEASE  |
+| Spring Security OAuth2 | 2.3.7.RELEASE  |
+| Mybatis                | 3.5.7          |
+
+项目结构
+
 ```
 strr-admin
 ├── strr-boot -- 入口

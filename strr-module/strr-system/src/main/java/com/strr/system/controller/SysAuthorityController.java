@@ -7,6 +7,7 @@ import com.strr.system.model.SysAuthority;
 import com.strr.system.model.SysAuthorityVO;
 import com.strr.system.model.SysUserDetails;
 import com.strr.system.service.ISysAuthorityService;
+import com.strr.system.service.ISysUserService;
 import com.strr.system.util.MenuUtil;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,9 +23,11 @@ import java.util.Map;
 @RequestMapping("/api/admin/sysAuthority")
 public class SysAuthorityController extends SCrudController<SysAuthority, Integer> {
     private final ISysAuthorityService sysAuthorityService;
+    private final ISysUserService sysUserService;
 
-    public SysAuthorityController(ISysAuthorityService sysAuthorityService) {
+    public SysAuthorityController(ISysAuthorityService sysAuthorityService, ISysUserService sysUserService) {
         this.sysAuthorityService = sysAuthorityService;
+        this.sysUserService = sysUserService;
     }
 
     @Override
@@ -48,10 +51,13 @@ public class SysAuthorityController extends SCrudController<SysAuthority, Intege
      * @return
      */
     @GetMapping("/userMenuTree")
-    public Result<Map<String, Object>> userMenuTree(@AuthenticationPrincipal SysUserDetails sysUserDetails) {
+    public Result<Map<String, Object>> userMenuTree(@AuthenticationPrincipal String principal) {
+        SysUserDetails userDetails = sysUserService.getByUsername(principal);
         Map<String, Object> map = new HashMap<>();
-        map.put("user", sysUserDetails);
-        map.put("menus", MenuUtil.buildMenuTree(sysUserDetails.getAuthorityList()));
+        map.put("user", userDetails);
+        if (userDetails != null) {
+            map.put("menus", MenuUtil.buildMenuTree(sysAuthorityService.listByUserId(userDetails.getId())));
+        }
         return Result.ok(map);
     }
 

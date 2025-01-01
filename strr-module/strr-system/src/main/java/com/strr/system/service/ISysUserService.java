@@ -2,6 +2,7 @@ package com.strr.system.service;
 
 import com.strr.base.service.CrudService;
 import com.strr.system.model.SysUser;
+import com.strr.system.model.SysUserDetails;
 
 import java.util.List;
 
@@ -26,4 +27,11 @@ public interface ISysUserService extends CrudService<SysUser, Integer> {
      * @param id
      */
     void removeWithRel(Integer id);
+
+    /**
+     * 获取用户
+     * @param username
+     * @return
+     */
+    SysUserDetails getByUsername(String username);
 }

@@ -29,7 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (!userDetailsList.isEmpty()) {
             SysUserDetails userDetails = userDetailsList.get(0);
             userDetails.setRoleList(sysRoleMapper.listByUserId(userDetails.getId()));
-            userDetails.setAuthorityList(sysAuthorityMapper.listByUserId(userDetails.getId()));
+//            userDetails.setAuthorityList(sysAuthorityMapper.listByUserId(userDetails.getId()));
             return userDetails;
         }
         throw new UsernameNotFoundException(String.format("User '%s' not found.", username));
